@@ -1,0 +1,10 @@
+<hello name="{{ name }}"></hello>
+<p>
+  Written by Arvin.A :)
+</p>
+<div class="row">
+  <div class="text-center">
+    <button class="btn btn-primary" (click)="showQuiz();">Start the Quiz</button>
+  </div> 
+  <app-quiz *ngIf="isShowComponent" ></app-quiz>
+ </div> 
