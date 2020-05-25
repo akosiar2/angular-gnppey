@@ -14,6 +14,7 @@ export class QuizComponent implements OnInit {
   quiz: Quiz = new Quiz(null);
   mode = 'quiz';
   quizName: string;
+  quizResults = 0;
 
   pager = {
     index: 0,
@@ -227,6 +228,8 @@ export class QuizComponent implements OnInit {
     this.quiz = new Quiz(this.quizData);
     this.pager.count = this.quiz.questions.length;
     this.mode = 'quiz';
+    this.quizResults = 0;
+    this.pager.index = 0;
   }
 
   get filteredQuestions() {
@@ -257,9 +260,15 @@ export class QuizComponent implements OnInit {
     return question.options.every(x => x.selected === x.isAnswer) ? 'correct' : 'wrong';
   };
 
+  getSum(total, num) {
+  return total + Math.round(num);
+}
+
   onSubmit() {
     let answers = [];
     this.quiz.questions.forEach(x => answers.push({ 'quizId': this.quiz.id, 'questionId': x.id, 'answered': x.answered }));
+
+    this.quiz.questions.forEach((x) =>{if(this.isCorrect(x) === 'correct') this.quizResults += 1;})
 
     console.log(this.quiz.questions);
     this.mode = 'result';
